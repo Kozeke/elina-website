@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La lingua italiana — Авторский справочник</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:           #FAF7F2;
+    --white:        #FFFFFF;
+    --text:         #1a1a1a;
+    --text-mid:     #3a3a3a;
+    --text-muted:   #888480;
+    --text-light:   #b0aba5;
+    --rose:         #c8788a;
+    --rose-lt:      #e8b4bc;
+    --rose-bg:      #f9f0f1;
+    --rose-border:  #f0d0d4;
+    --border:       #e8e2da;
+    --border-lt:    #f0ece5;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* ── Layout: true 50/50 split of viewport ── */
+  .page {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  /* ── Sidebar: 35% ── */
+  .sidebar {
+    width: 35%;
+    flex-shrink: 0;
+    padding: 56px 48px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+  }
+
+  .avatar {
+    width: 160px;
+    height: 200px;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    margin-bottom: 24px;
+  }
+
+  .author-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .author-bio-short {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .sidebar-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--border);
+    margin: 28px auto;
+  }
+
+  .sidebar-fact {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .sidebar-fact-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .sidebar-fact-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--rose);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* ── Main: 65% ── */
+  .main {
+    width: 65%;
+    flex-shrink: 0;
+    padding: 52px 60px 100px;
+    background: var(--bg);
+  }
+
+  /* ── Product hero image ── */
+  .product-hero-img {
+    width: 100%;
+    max-height: 360px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    margin-bottom: 32px;
+    border-radius: 2px;
+    border: 1px solid var(--rose-border);
+  }
+
+  /* ── Product hero fallback ── */
+  .product-image {
+    width: 100%;
+    height: 280px;
+    border-radius: 2px;
+    background: linear-gradient(160deg, #f7eeee 0%, #f2e4e6 40%, #ead8da 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--rose-border);
+  }
+
+  .floral-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(200,120,138,0.18);
+  }
+  .floral-ring.r1 { width: 300px; height: 300px; top: -80px; left: -80px; }
+  .floral-ring.r2 { width: 220px; height: 220px; top: -40px; left: -40px; }
+  .floral-ring.r3 { width: 300px; height: 300px; bottom: -80px; right: -80px; }
+  .floral-ring.r4 { width: 200px; height: 200px; bottom: -40px; right: -40px; }
+
+  .product-image-inner {
+    text-align: center;
+    z-index: 1;
+    padding: 32px;
+  }
+
+  .product-eyebrow {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--rose);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .product-title-main {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .product-title-sub {
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .product-tagline {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-light);
+    text-transform: uppercase;
+  }
+
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .price {
+    font-size: 16px;
+    color: var(--text-mid);
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 28px 0;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .desc {
+    color: var(--text-mid);
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 14px;
+    font-weight: 300;
+  }
+
+  .desc strong { font-weight: 600; color: var(--text); }
+
+  .bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .bullet-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-mid);
+    font-weight: 300;
+  }
+
+  .bullet-list li::before {
+    content: '•';
+    color: var(--text-mid);
+    flex-shrink: 0;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* ── Contents ── */
+  .get-list { display: flex; flex-direction: column; }
+
+  .get-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-lt);
+    font-size: 14px;
+    color: var(--text-mid);
+    font-weight: 300;
+  }
+
+  .get-item:last-child { border-bottom: none; }
+
+  .get-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    color: var(--text-light);
+    min-width: 22px;
+    flex-shrink: 0;
+    font-style: italic;
+  }
+
+  .get-text {
+    flex: 1;
+  }
+
+  .get-thumb-link {
+    flex-shrink: 0;
+    display: block;
+    border-radius: 2px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s, opacity 0.2s;
+  }
+
+  .get-thumb-link:hover {
+    border-color: var(--rose-lt);
+    opacity: 0.85;
+  }
+
+  .get-thumb {
+    width: 64px;
+    height: 44px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── Slider: one slide at a time ── */
+  .slider-outer {
+    position: relative;
+  }
+
+  .slider-wrapper {
+    overflow: hidden;
+    border-radius: 2px;
+    transition: height 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slider-track {
+    display: flex;
+    align-items: flex-start;
+    transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slide {
+    width: 100%;
+    min-width: 100%;
+    flex-shrink: 0;
+    background: var(--white);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .slide-media {
+    width: 100%;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .slide-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* placeholder when no real image */
+  .slide-img-placeholder {
+    width: 100%;
+    height: 200px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f9f0f1, #f2e4e6);
+    position: relative;
+  }
+
+  .slide-img-placeholder-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-style: italic;
+    font-weight: 600;
+    color: rgba(200,120,138,0.25);
+    letter-spacing: -1px;
+  }
+
+  .slide-body {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .slide-number {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: rgba(200,120,138,0.18);
+    line-height: 1;
+    font-style: italic;
+  }
+
+  .slide-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+
+  .slide-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    font-style: italic;
+  }
+
+  .slide-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.55;
+  }
+
+  .slider-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+
+  .slider-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .dot {
+    width: 18px;
+    height: 1px;
+    background: var(--border);
+    cursor: pointer;
+    transition: background 0.2s, width 0.2s;
+  }
+
+  .dot.active {
+    background: var(--rose);
+    width: 28px;
+  }
+
+  .slider-arrows { display: flex; gap: 8px; }
+
+  .slider-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+    border-radius: 50%;
+    font-family: inherit;
+  }
+
+  .slider-btn:hover { border-color: var(--rose); color: var(--rose); }
+
+  .slide-counter {
+    font-size: 12px;
+    color: var(--text-light);
+    letter-spacing: 1px;
+  }
+
+  /* ── Audience ── */
+  .audience-list { display: flex; flex-direction: column; }
+
+  .audience-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 14px;
+    color: var(--text-mid);
+    font-weight: 300;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border-lt);
+  }
+
+  .audience-item:last-child { border-bottom: none; }
+
+  .audience-arrow { color: var(--rose); flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  /* ── Author ── */
+  .author-card {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    padding: 28px 0;
+  }
+
+  .author-photo {
+    width: 110px;
+    height: 150px;
+    object-fit: cover;
+    object-position: top center;
+    flex-shrink: 0;
+  }
+
+  .author-info { flex: 1; }
+
+  .author-full-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+    font-style: italic;
+  }
+
+  .author-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rose);
+    font-weight: 400;
+    margin-bottom: 18px;
+  }
+
+  .author-facts { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+
+  .author-facts li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-mid);
+    font-weight: 300;
+  }
+
+  .author-facts li::before {
+    content: '•';
+    color: var(--rose-lt);
+    font-size: 16px;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+
+  .cert-pill {
+    display: inline-block;
+    border: 1px solid var(--rose-border);
+    color: var(--rose);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    padding: 5px 14px;
+    margin-top: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    background: var(--rose-bg);
+    border-radius: 2px;
+  }
+
+  /* ── CTA ── */
+  .cta-final {
+    text-align: center;
+    padding: 52px 40px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    margin: 32px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-final::before {
+    content: 'La lingua italiana';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 60px;
+    font-style: italic;
+    font-weight: 700;
+    color: rgba(0,0,0,0.025);
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .cta-final h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .cta-final p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    font-weight: 300;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--text);
+    color: var(--white);
+    border: 1px solid var(--text);
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 14px 38px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: background 0.2s, border-color 0.2s;
+    border-radius: 2px;
+  }
+
+  .cta-btn:hover { background: var(--rose); border-color: var(--rose); }
+
+  .cta-price-note {
+    margin-top: 14px;
+    font-size: 11px;
+    color: var(--text-light);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── Checkout ── */
+  .checkout-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .checkout-sub {
+    font-size: 11px;
+    color: var(--text-light);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .form-group { margin-bottom: 16px; }
+
+  .form-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+    display: block;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    border-radius: 2px;
+  }
+
+  .form-input::placeholder { color: var(--text-light); }
+  .form-input:focus { border-color: var(--rose-lt); }
+
+  .input-with-logos { position: relative; }
+  .input-with-logos .form-input { padding-right: 110px; }
+
+  .logos-inside {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 5px;
+  }
+
+  .card-logo { border-radius: 2px; padding: 2px 6px; font-size: 9px; font-weight: 700; }
+  .card-logo.mc   { background: #eb001b; color: white; }
+  .card-logo.visa { background: #1a1f71; color: white; }
+  .card-logo.amex { background: #2e77bc; color: white; }
+
+  .card-fields {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .country-select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23b0aba5' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    border-radius: 2px;
+  }
+
+  .country-select:focus { border-color: var(--rose-lt); }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 16px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-weight: 300;
+  }
+
+  .checkbox-row input { margin-top: 3px; accent-color: var(--rose); }
+
+  .totals { border-top: 1px solid var(--border); margin: 20px 0; padding-top: 18px; }
+
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-weight: 300;
+  }
+
+  .total-row.final {
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 500;
+    border-top: 1px dashed var(--border);
+    padding-top: 14px;
+    margin-top: 6px;
+    margin-bottom: 0;
+  }
+
+  .secure-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 18px 0 22px;
+  }
+
+  .lock-svg { color: #4caf7d; }
+
+  .btn-buy {
+    width: 100%;
+    padding: 15px;
+    background: var(--text);
+    color: var(--white);
+    border: 1px solid var(--text);
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: background 0.2s, border-color 0.2s;
+    border-radius: 2px;
+  }
+
+  .btn-buy:hover { background: var(--rose); border-color: var(--rose); }
+
+  /* ── Responsive ── */
+  @media (max-width: 960px) {
+    .sidebar { display: none; }
+    .main { width: 100%; padding: 36px 24px 80px; }
+  }
+
+  @media (max-width: 640px) {
+    .author-card { flex-direction: column; }
+    .author-photo { width: 100%; height: 220px; }
+    .card-fields { grid-template-columns: 1fr 1fr; }
+    .product-title-main { font-size: 38px; }
+  }
+
+  @media (max-width: 420px) {
+    .card-fields { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Sidebar 35% ── -->
+  <aside class="sidebar">
+    <img class="avatar" src="photo/author.jpeg" alt="Элина Сыч">
+    <div class="author-name">Элина Юрьевна Сыч</div>
+    <div class="author-bio-short">Преподаватель итальянского языка<br>Перуджа, Италия</div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-fact">
+      <div class="sidebar-fact-label">Сертификат</div>
+      <div class="sidebar-fact-value">CILS C1 · 2023</div>
+    </div>
+    <div class="sidebar-fact">
+      <div class="sidebar-fact-label">Магистратура</div>
+      <div class="sidebar-fact-value">Università di Perugia</div>
+    </div>
+    <div class="sidebar-fact">
+      <div class="sidebar-fact-label">Стажировки</div>
+      <div class="sidebar-fact-value">Firenze × 2</div>
+    </div>
+  </aside>
+
+  <!-- ── Main 65% ── -->
+  <main class="main">
+
+    <!-- Hero image — замените YOUR_IMAGE.jpg на путь к вашему файлу -->
+    <img
+      src="photo/banner.jpeg"
+      alt="La lingua italiana"
+      class="product-hero-img"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+    >
+    <!-- Заглушка — показывается если изображение не найдено -->
+    <div class="product-image" style="display:none;">
+      <div class="floral-ring r1"></div>
+      <div class="floral-ring r2"></div>
+      <div class="floral-ring r3"></div>
+      <div class="floral-ring r4"></div>
+      <div class="product-image-inner">
+        <div class="product-eyebrow">Авторский справочник · Grammatica Italiana</div>
+        <div class="product-title-main">La lingua italiana</div>
+        <div class="product-title-sub">Your little grammar bible</div>
+        <div class="product-tagline">Один учебник вместо пяти сайтов · От нуля до C2</div>
+      </div>
+    </div>
+
+    <div class="product-name">La lingua italiana</div>
+    <div class="price">€14.99</div>
+
+    <div class="divider"></div>
+
+    <p class="desc">Более 350 страниц — все грамматические правила итальянского языка в одном месте. Чёткие таблицы, структурные объяснения, примеры на каждое правило.</p>
+
+    <p class="desc">Это для тебя, если:</p>
+    <ul class="bullet-list">
+      <li>Ты начинаешь с абсолютного нуля</li>
+      <li>Ты уже учишь итальянский, но чувствуешь пробелы в грамматике</li>
+      <li>Ты хочешь иметь <strong>один надёжный источник</strong> вместо десяти пособий</li>
+      <li>Тебе важно не просто говорить — а понимать язык изнутри</li>
+    </ul>
+
+
+    <div class="divider"></div>
+
+    <!-- Contents — замените PHOTO_01.jpg … PHOTO_06.jpg на пути к вашим файлам -->
+    <div class="section-label">Что внутри</div>
+    <div class="get-list">
+
+      <div class="get-item">
+        <span class="get-num">01.</span>
+        <span class="get-text">Фонетика и произношение с нуля</span>
+        <a href="PHOTO_01.jpg" target="_blank" class="get-thumb-link">
+          <img src="PHOTO_01.jpg" alt="Фонетика" class="get-thumb"
+            onerror="this.parentElement.style.display='none'">
+        </a>
+      </div>
+
+      <div class="get-item">
+        <span class="get-num">02.</span>
+        <span class="get-text">Все времена — от Presente до Congiuntivo, Periodo ipotetico</span>
+        <a href="PHOTO_02.jpg" target="_blank" class="get-thumb-link">
+          <img src="PHOTO_02.jpg" alt="Времена" class="get-thumb"
+            onerror="this.parentElement.style.display='none'">
+        </a>
+      </div>
+
+      <div class="get-item">
+        <span class="get-num">03.</span>
+        <span class="get-text">Чёткие структурные таблицы по каждому правилу</span>
+        <a href="PHOTO_03.jpg" target="_blank" class="get-thumb-link">
+          <img src="PHOTO_03.jpg" alt="Таблицы" class="get-thumb"
+            onerror="this.parentElement.style.display='none'">
+        </a>
+      </div>
+
+      <div class="get-item">
+        <span class="get-num">04.</span>
+        <span class="get-text">Условные предложения, косвенная речь, пассивный залог</span>
+        <a href="PHOTO_04.jpg" target="_blank" class="get-thumb-link">
+          <img src="PHOTO_04.jpg" alt="Условные" class="get-thumb"
+            onerror="this.parentElement.style.display='none'">
+        </a>
+      </div>
+
+      <div class="get-item">
+        <span class="get-num">05.</span>
+        <span class="get-text">Большая таблица управления глаголов с предлогами</span>
+        <a href="PHOTO_05.jpg" target="_blank" class="get-thumb-link">
+          <img src="PHOTO_05.jpg" alt="Глаголы" class="get-thumb"
+            onerror="this.parentElement.style.display='none'">
+        </a>
+      </div>
+
+      <div class="get-item">
+        <span class="get-num">06.</span>
+        <span class="get-text">40+ устойчивых выражений с переводом и примерами</span>
+        <a href="PHOTO_06.jpg" target="_blank" class="get-thumb-link">
+          <img src="PHOTO_06.jpg" alt="Выражения" class="get-thumb"
+            onerror="this.parentElement.style.display='none'">
+        </a>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Slider: 1 slide at a time with image -->
+    <div class="section-label">Взгляд внутрь</div>
+    <div class="slider-outer">
+      <div class="slider-wrapper">
+        <div class="slider-track" id="sliderTrack">
+
+          <!-- Слайд 1 — замените SLIDE_01.jpg на ваш файл -->
+          <div class="slide">
+            <div class="slide-media">
+              <img src="photo/image-1.jpeg" alt="Fonetica" class="slide-img"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="slide-img-placeholder" style="display:none;">
+                <span class="slide-img-placeholder-text">Fonetica</span>
+                <span class="slide-number">01</span>
+              </div>
+            </div>
+            <div class="slide-body">
+              <span class="slide-tag">Раздел I</span>
+              <div class="slide-title">Fonetica</div>
+              <div class="slide-desc">Произношение, алфавит, таблицы звуков и транскрипций с нуля</div>
+            </div>
+          </div>
+
+          <!-- Слайд 2 — замените SLIDE_02.jpg на ваш файл -->
+          <div class="slide">
+            <div class="slide-media">
+              <img src="photo/image-2.jpeg" alt="Tempi verbali" class="slide-img"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="slide-img-placeholder" style="display:none;">
+                <span class="slide-img-placeholder-text">Tempi</span>
+                <span class="slide-number">02</span>
+              </div>
+            </div>
+            <div class="slide-body">
+              <span class="slide-tag">Раздел II</span>
+              <div class="slide-title">Tempi verbali</div>
+              <div class="slide-desc">Полные таблицы спряжений — от Presente до Congiuntivo</div>
+            </div>
+          </div>
+
+          <!-- Слайд 3 — замените SLIDE_03.jpg на ваш файл -->
+          <div class="slide">
+            <div class="slide-media">
+              <img src="photo/image-3.jpeg" alt="Periodo ipotetico" class="slide-img"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="slide-img-placeholder" style="display:none;">
+                <span class="slide-img-placeholder-text">Ipotetico</span>
+                <span class="slide-number">03</span>
+              </div>
+            </div>
+            <div class="slide-body">
+              <span class="slide-tag">Раздел III</span>
+              <div class="slide-title">Periodo ipotetico</div>
+              <div class="slide-desc">Все три типа условных предложений — схемы и примеры</div>
+            </div>
+          </div>
+
+          <!-- Слайд 4 — замените SLIDE_04.jpg на ваш файл -->
+    
+
+          <!-- Слайд 5 — замените SLIDE_05.jpg на ваш файл -->
+          <div class="slide">
+            <div class="slide-media">
+              <img src="photo/image-5.jpeg" alt="Verbi + preposizioni" class="slide-img"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="slide-img-placeholder" style="display:none;">
+                <span class="slide-img-placeholder-text">Verbi</span>
+                <span class="slide-number">05</span>
+              </div>
+            </div>
+            <div class="slide-body">
+              <span class="slide-tag">Раздел IV</span>
+              <div class="slide-title">Verbi + preposizioni</div>
+              <div class="slide-desc">Большая таблица с вопросительными словами</div>
+            </div>
+          </div>
+
+          <!-- Слайд 6 — замените SLIDE_06.jpg на ваш файл -->
+          <div class="slide">
+            <div class="slide-media">
+              <img src="photo/image-6.jpeg" alt="Verbi + preposizioni" class="slide-img"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="slide-img-placeholder" style="display:none;">
+                <span class="slide-img-placeholder-text">Verbi</span>
+                <span class="slide-number">06</span>
+              </div>
+            </div>
+            <div class="slide-body">
+              <span class="slide-tag">Раздел VI</span>
+              <div class="slide-title">Verbi + preposizioni</div>
+              <div class="slide-desc">40+ устойчивых выражений с переводом и примерами которых нет в других учебниках</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="slider-controls">
+        <div class="slider-dots" id="sliderDots"></div>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <div class="slider-arrows">
+          <button class="slider-btn" onclick="slideMove(-1)">&#8592;</button>
+          <button class="slider-btn" onclick="slideMove(1)">&#8594;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- For whom -->
+    <div class="section-label">Для кого</div>
+    <div class="audience-list">
+      <div class="audience-item"><span class="audience-arrow">→</span><span>Ты начинаешь с абсолютного нуля</span></div>
+      <div class="audience-item"><span class="audience-arrow">→</span><span>Ты уже учишь итальянский, но чувствуешь пробелы в грамматике</span></div>
+      <div class="audience-item"><span class="audience-arrow">→</span><span>Ты хочешь один надёжный источник вместо десятков сайтов</span></div>
+      <div class="audience-item"><span class="audience-arrow">→</span><span>Тебе важно не просто говорить — а понимать язык изнутри</span></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Author -->
+    <div class="section-label">Об авторе</div>
+    <div class="author-card">
+      <img class="author-photo" src="photo/author.jpeg" alt="Элина Сыч">
+      <div class="author-info">
+        <div class="author-full-name">Элина Юрьевна Сыч</div>
+        <div class="author-title">Преподаватель итальянского языка</div>
+        <ul class="author-facts">
+          <li>Высшее образование, итальянский как первый иностранный язык с нуля</li>
+          <li>Сертификат CILS C1 (2023) — Università per Stranieri di Siena</li>
+          <li>Дважды стажировалась в проекте Misericordia (Флоренция, Италия)</li>
+          <li>Оканчивает магистратуру в Перудже — преподавание итальянского как иностранного</li>
+          <li>Пишет диссертацию по методике преподавания</li>
+        </ul>
+        <span class="cert-pill">CILS C1 · Сертифицирована</span>
+      </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="cta-final">
+      <h2>Твой итальянский начинается здесь.</h2>
+      <p>La lingua italiana — более 350 страниц, которые останутся с тобой навсегда.</p>
+     
+      <a href="https://buy.stripe.com/test_28E8wOayE3xg5B70lc3wQ00" target="_blank" class="btn-buy" style="display:block; text-align:center; text-decoration:none;">
+        Купить — €14.99
+      </a>
+      <div class="cta-price-note">PDF · Мгновенный доступ · €14.99</div>
+    </div>
+
+    <!-- Checkout -->
+
+
+  </main>
+</div>
+
+<script>
+  const track = document.getElementById('sliderTrack');
+  const dotsWrap = document.getElementById('sliderDots');
+  const counter = document.getElementById('slideCounter');
+  const slides = Array.from(track.querySelectorAll('.slide'));
+  const total = slides.length;
+  let current = 0;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsWrap.appendChild(d);
+  });
+
+  function goTo(i) {
+    current = Math.max(0, Math.min(i, total - 1));
+    const w = track.parentElement.offsetWidth;
+    track.style.transform = `translateX(-${current * w}px)`;
+    // adapt wrapper height to the active slide's natural height
+    const activeSlide = slides[current];
+    track.parentElement.style.height = activeSlide.offsetHeight + 'px';
+    dotsWrap.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx === current));
+    counter.textContent = `${current + 1} / ${total}`;
+  }
+
+  // set initial height after images may have loaded
+  function setInitialHeight() {
+    track.parentElement.style.height = slides[0].offsetHeight + 'px';
+  }
+
+  function slideMove(dir) { goTo(current + dir); }
+
+  // Set height once all images in slide 0 are loaded
+  const firstImgs = slides[0].querySelectorAll('img');
+  if (firstImgs.length === 0) {
+    setInitialHeight();
+  } else {
+    let loaded = 0;
+    firstImgs.forEach(img => {
+      if (img.complete) { loaded++; if (loaded === firstImgs.length) setInitialHeight(); }
+      else { img.addEventListener('load', () => { loaded++; if (loaded === firstImgs.length) setInitialHeight(); }); img.addEventListener('error', () => { loaded++; if (loaded === firstImgs.length) setInitialHeight(); }); }
+    });
+  }
+
+  // Also update height on each image load in case slides load after init
+  slides.forEach(slide => {
+    slide.querySelectorAll('img').forEach(img => {
+      img.addEventListener('load', () => { if (slides.indexOf(slide) === current) track.parentElement.style.height = slide.offsetHeight + 'px'; });
+    });
+  });
+
+  // Auto-advance, pauses on hover
+  let timer = setInterval(() => goTo(current >= total - 1 ? 0 : current + 1), 4000);
+  track.parentElement.addEventListener('mouseenter', () => clearInterval(timer));
+  track.parentElement.addEventListener('mouseleave', () => {
+    timer = setInterval(() => goTo(current >= total - 1 ? 0 : current + 1), 4000);
+  });
+
+  // Recalculate on resize
+  window.addEventListener('resize', () => goTo(current));
+
+  // Swipe support
+  let touchStartX = 0;
+  track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) slideMove(diff > 0 ? 1 : -1);
+  });
+</script>
+</body>
+</html>
