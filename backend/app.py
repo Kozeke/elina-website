@@ -77,7 +77,7 @@ async def stripe_webhook(request: Request):
         raise HTTPException(status_code=400, detail="Invalid signature")
 
     if event["type"] == "checkout.session.completed":
-        session = event["data"]["object"]
+        session = event["data"]["object"].to_dict()
         customer_email = (
             session.get("customer_details", {}).get("email")
             or session.get("customer_email")
