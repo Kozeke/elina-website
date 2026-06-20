@@ -1,19 +1,47 @@
 import os
 import smtplib
+import urllib.request
 from email.message import EmailMessage
+from contextlib import asynccontextmanager
 
 import stripe
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
-
-app = FastAPI()
 
 stripe.api_key = os.environ["STRIPE_SECRET_KEY"]
 ENDPOINT_SECRET = os.environ["STRIPE_WEBHOOK_SECRET"]
 
 GMAIL_USER = os.environ["GMAIL_USER"]               # e.g. you@gmail.com
 GMAIL_APP_PASSWORD = os.environ["GMAIL_APP_PASSWORD"]  # 16-char App Password
-BOOK_PATH = os.environ.get("BOOK_PATH", "book.pdf")    # path to your PDF on the server
+
+# Google Drive file ID extracted from the shareable link
+GDRIVE_FILE_ID = os.environ.get("GDRIVE_FILE_ID", "")
+
+# Local path where the PDF will be saved after downloading from Google Drive
+BOOK_PATH = "/tmp/book.pdf"
+
+# Direct download URL for a publicly shared Google Drive file
+GDRIVE_DOWNLOAD_URL = f"https://drive.google.com/uc?export=download&id={GDRIVE_FILE_ID}"
+
+
+def download_book() -> None:
+    """Download the book PDF from Google Drive to the local /tmp directory at startup."""
+    if not GDRIVE_FILE_ID:
+        print("WARNING: GDRIVE_FILE_ID is not set — book will not be available.")
+        return
+    print(f"Downloading book from Google Drive (file id: {GDRIVE_FILE_ID})...")
+    urllib.request.urlretrieve(GDRIVE_DOWNLOAD_URL, BOOK_PATH)
+    print(f"Book downloaded successfully to {BOOK_PATH}.")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Download the book PDF from Google Drive before the server starts accepting requests
+    download_book()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 def send_book(to_email: str) -> None:
